@@ -6,6 +6,7 @@ import {
   ViewStyle,
 } from 'react-native'
 import React from 'react'
+import useTheme from '../hooks/useTheme'
 
 interface ButtonProps extends TouchableOpacityProps {
   children?: React.ReactNode
@@ -21,6 +22,9 @@ interface ButtonProps extends TouchableOpacityProps {
   paddingVertical?: ViewStyle['paddingVertical']
   paddingHorizontal?: ViewStyle['paddingHorizontal']
   radius?: ViewStyle['borderRadius']
+  align?: ViewStyle['alignItems']
+  justify?: ViewStyle['justifyContent']
+  center?: boolean
   style?: StyleProp<ViewStyle>
 }
 
@@ -38,10 +42,20 @@ const Button = ({
   marginVertical,
   marginHorizontal,
   radius,
+  align,
+  justify,
+  center,
   style,
   ...props
 }: ButtonProps) => {
+  const { sizes } = useTheme()
   const buttonStyle = StyleSheet.flatten([
+    {
+      height: sizes.buttonHeight,
+      borderRadius: sizes.buttonRadius,
+      borderWidth: sizes.buttonBorder,
+    },
+    center !== undefined && { alignItems: 'center', justifyContent: 'center' },
     color !== undefined && { backgroundColor: color },
     padding !== undefined && { padding },
     paddingVertical !== undefined && { paddingVertical },
@@ -54,8 +68,10 @@ const Button = ({
     marginVertical !== undefined && { marginVertical },
     marginHorizontal !== undefined && { marginHorizontal },
     radius !== undefined && { borderRadius: radius },
+    align !== undefined && { alignItems: align },
+    justify !== undefined && { justifyContent: justify },
     style,
-  ])
+  ]) as ViewStyle
 
   return (
     <TouchableOpacity style={buttonStyle} {...props}>

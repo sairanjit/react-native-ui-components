@@ -6,6 +6,7 @@ import {
   TextStyle,
 } from 'react-native'
 import React from 'react'
+import useTheme from '../hooks/useTheme'
 
 interface InputProps extends TextInputProps {
   children?: React.ReactNode
@@ -37,7 +38,15 @@ const Input = ({
   paddingHorizontal,
   ...props
 }: InputProps) => {
+  const { sizes } = useTheme()
+
   const inputStyle = StyleSheet.flatten([
+    {
+      height: sizes.inputHeight,
+      borderRadius: sizes.inputRadius,
+      borderWidth: sizes.inputBorder,
+      paddingHorizontal: sizes.base,
+    },
     margin !== undefined && { margin },
     marginTop !== undefined && { marginTop },
     marginBottom !== undefined && { marginBottom },
@@ -49,7 +58,7 @@ const Input = ({
     paddingVertical !== undefined && { paddingVertical },
     paddingHorizontal !== undefined && { paddingHorizontal },
     style,
-  ])
+  ]) as TextStyle
 
   return (
     <TextInput style={inputStyle} {...props}>
