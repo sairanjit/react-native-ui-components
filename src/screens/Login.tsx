@@ -8,11 +8,13 @@ const Login = () => {
         Login
       </Text>
       <Input
+        padding={12}
         keyboardType="email-address"
         placeholder="Email"
         placeholderTextColor="black"
       />
       <Input
+        padding={12}
         secureTextEntry
         placeholder="Password"
         placeholderTextColor="black"
